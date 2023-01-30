@@ -246,8 +246,8 @@ en_US.UTF-8 UTF-8   ----   171 строчка
 ```
 #### Чтобы найти нужную строчку:
 
-**`CTRL`** + **`-`**
-
+**`CTRL`** + **`-`** → `398`  
+**`CTRL`** + **`-`** → `171`
 
 #### Сохраним файл конфига:
 
@@ -386,94 +386,140 @@ reboot
 nano /etc/sudoers
 ```
 
-#### Раскомментируем 85 строчку - **`CTRL`** + **`-`**
+#### Раскомментируем 85 строчку - **`CTRL`** + **`-`** → `85`
 
 `%wheel ALL=(ALL:ALL) ALL` 
 
 
-Создадим нового пользователя
+#### Создадим нового пользователя
 
 ```
 useradd -m -G wheel -s /bin/bash USER_NAME
 ```
 
-#### `USER_NAME - имя пользователя с строчными буквами`
+`USER_NAME - имя пользователя с строчными буквами`
 
-Задаём пароль учётной записи
-
+#### Задаём пароль учётной записи
+```
 passwd USER_NAME
+```
+#### Выходим:
 
-Выходим:
+```
+exit
+```
 
-```exit```
+#### Заходим под созданным пользователем
 
-Заходим под созданным пользователем
+#### Проверим root доступ:
 
-Проверим root доступ:
+```
+sudo su
+``` 
 
-```sudo su``` → пароль
+#### Запускаем сетевую службу командой
 
-Запускаем сетевую службу командой
+```
+systemctl enable NetworkManager
+```
 
-```systemctl enable NetworkManager```
+#### Перезагружаем систему командой
 
-Перезагружаем систему командой
+```
+reboot
+```
 
-```reboot```
+>## 8. Настройка системы
 
-## 8. Настройка системы
-<br/><br/>
-Подключение к интернету по проводу происходит автоматически
+### Подключение к интернету по проводу также происходит автоматически
 
-Подключение к точке доступа:
+### Подключение к точке доступа немного другое :
+```
+nmcli d wifi connect NAME
+```
+`NAME - имя точки доступа`
 
-nmcli d wifi connect NAME password PASSWD
+```
+nmcli d wifi connect NAME password PASSWORD
+```
 
-NAME - имя точки доступа
+`PASSWORD - пароль точки доступа если есть`
 
-PASSWD - пароль если есть
 
-Откроем в редакторе конфиг pacman
+### Откроем в редакторе конфиг pacman
 
-```sudo nano /etc/pacman.conf```
+```
+sudo nano /etc/pacman.conf
+```
 
-Раскомментируем две строчки - 93 и 94
+#### Раскомментируем две строчки - 93 и 94
 
-ctrl + c → 93
-ctrl + c → 94
+**`CTRL`** + **`-`** → `93`  
+**`CTRL`** + **`-`** → `94`
 
-## 9. Устанавливаем пакеты видеоускорения
-<br/><br/>
-Для AMD
+>## 9. Устанавливаем пакеты видеоускорения
 
-```sudo pacman -Syu lib32-mesa vulkan-radeon lib32-vulkan-radeon vulkan-icd-loader lib32-vulkan-icd-loader```
+### Для AMD
 
-Для INTEL
+```
+sudo pacman -Syu lib32-mesa vulkan-radeon lib32-vulkan-radeon vulkan-icd-loader lib32-vulkan-icd-loader
+```
 
-Для NVIDIA
+### Для INTEL
+```
+lib32-mesa vulkan-intel lib32-vulkan-intel vulkan-icd-loader lib32-vulkan-icd-    loader libva-media-driver xf86-video-intel
+```
+### Для NVIDIA
+```
+nvidia-dkms nvidia-utils lib32-nvidia-utils nvidia-settings vulkan-icd-loader lib32-vulkan-icd-loader lib32-opencl-nvidia opencl-nvidia libxnvctrl 
+```
+#### Сюда же оптимизированные DKMS модули проприетарного драйвера NVIDIA  
 
-Для INTEL + NVIDIA
+#### ( Не всегда лучше чем обычный драйвер , может сбоить )
 
-Установим дополнение NetworkManager для графических оболочек:
+#### устанавливаем
+#### 1.  git clone 
+#### 2.  cd nvidia-dkms-performance
+#### 3.  makepkg -sric  ( там соглашаемся с заменой пакета )
+#### 4.  sudo mkinitcpio -p наименование вашего ядра 
+#### 5.  reboot 
+### Для INTEL + NVIDIA
+```
+nvidia-dkms nvidia-utils lib32-nvidia-utils nvidia-settings vulkan-icd-loader lib32-vulkan-icd-loader lib32-opencl-nvidia opencl-nvidia libxnvctrl lib32-mesa vulkan-intel lib32-vulkan-intel vulkan-icd-loader lib32-vulkan-icd-loader libva-intel-driver xf86-video-intel 
+```
+#### Здесь тоже ставим DKMS модули как описано выше
 
-```sudo pacman -S network-manager-applet```
+### Установим дополнение NetworkManager для графических оболочек:
 
-Перезагружаемся
+```
+sudo pacman -S network-manager-applet
+```
 
-```sudo reboot```
+### Перезагружаемся
 
-## 10. Финалочка - устанавливаем графическую оболочку:
-<br/><br/>
+```
+sudo reboot
+```
 
-Обновим зеркала:
+>## 10. Финалочка - устанавливаем графическую оболочку:
 
-```sudo reflector --sort rate -l 5 --save /etc/pacman.d/mirrorlist```
+#### Обновим зеркала:
 
-Включим графическую оболочку
+```
+sudo reflector --sort rate -l 5 --save /etc/pacman.d/mirrorlist
+```
+## Установим графическую оболочку
+### KDE Plasma
+
+## Включим графическую оболочку
 
 Для KDE-
-```sudo systemctl enable sddm```
+```
+sudo systemctl enable sddm
+```
 
-Перезагружаемся, и на этот раз уже в графическую оболочку.
+#### Перезагружаемся, и на этот раз уже в графическую оболочку.
 
-```reboot```
+```
+reboot
+```
