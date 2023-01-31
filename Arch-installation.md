@@ -481,7 +481,7 @@ nvidia-dkms nvidia-utils lib32-nvidia-utils nvidia-settings vulkan-icd-loader li
 #### 1.  git clone 
 #### 2.  cd nvidia-dkms-performance
 #### 3.  makepkg -sric  ( там соглашаемся с заменой пакета )
-#### 4.  sudo mkinitcpio -p наименование вашего ядра 
+#### 4.  sudo mkinitcpio
 #### 5.  reboot 
 ### Для INTEL + NVIDIA
 ```
@@ -513,12 +513,12 @@ sudo reflector --sort rate -l 5 --save /etc/pacman.d/mirrorlist
 
 ## Включим графическую оболочку
 
-Для KDE-
+### KDE Plasma
 ```
 sudo systemctl enable sddm
 ```
 
-#### Перезагружаемся, и на этот раз уже в графическую оболочку.
+### Перезагружаемся, и на этот раз уже в графическую оболочку.
 
 ```
 reboot
