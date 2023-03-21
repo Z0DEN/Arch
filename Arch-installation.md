@@ -227,7 +227,7 @@ ln -sf /usr/share/zoneinfo/Europe/Moscow /etc/localtime
 ```
 
 ```
-hwclock -- systohc
+hwclock --systohc
 ```
 
 >## 5.Русифицируем систему.
@@ -397,7 +397,7 @@ nano /etc/sudoers
 useradd -m -G wheel -s /bin/bash USER_NAME
 ```
 
-`USER_NAME - имя пользователя с строчными буквами`
+`USER_NAME - имя пользователя со строчными буквами`
 
 #### Задаём пароль учётной записи
 ```
@@ -473,21 +473,11 @@ lib32-mesa vulkan-intel lib32-vulkan-intel vulkan-icd-loader lib32-vulkan-icd-  
 ```
 nvidia-dkms nvidia-utils lib32-nvidia-utils nvidia-settings vulkan-icd-loader lib32-vulkan-icd-loader lib32-opencl-nvidia opencl-nvidia libxnvctrl 
 ```
-#### Сюда же оптимизированные DKMS модули проприетарного драйвера NVIDIA  
 
-#### ( Не всегда лучше чем обычный драйвер , может сбоить )
-
-#### устанавливаем
-#### 1.  git clone 
-#### 2.  cd nvidia-dkms-performance
-#### 3.  makepkg -sric  ( там соглашаемся с заменой пакета )
-#### 4.  sudo mkinitcpio
-#### 5.  reboot 
 ### Для INTEL + NVIDIA
 ```
 nvidia-dkms nvidia-utils lib32-nvidia-utils nvidia-settings vulkan-icd-loader lib32-vulkan-icd-loader lib32-opencl-nvidia opencl-nvidia libxnvctrl lib32-mesa vulkan-intel lib32-vulkan-intel vulkan-icd-loader lib32-vulkan-icd-loader libva-intel-driver xf86-video-intel 
 ```
-#### Здесь тоже ставим DKMS модули как описано выше
 
 ### Установим дополнение NetworkManager для графических оболочек:
 
@@ -503,19 +493,75 @@ sudo reboot
 
 >## 10. Финалочка - устанавливаем графическую оболочку:
 
-#### Обновим зеркала:
+### Обновим зеркала (может помочь если будет ошибка при установке графической оболочки):
 
 ```
 sudo reflector --sort rate -l 5 --save /etc/pacman.d/mirrorlist
 ```
-## Установим графическую оболочку
-### KDE Plasma
 
-## Включим графическую оболочку
-
-### KDE Plasma
+## KDE Plasma:
+```
+sudo pacman -S xorg xorg-server plasma plasma-wayland-session egl-wayland sddm sddm-kcm packagekit-qt5 kde-applications
+```
+### Включим графическую оболочку:
 ```
 sudo systemctl enable sddm
+```
+## Gnome:
+```
+sudo pacman -S xorg xorg-server gnome gnome-extra gdm
+```
+### Включим графическую оболочку:
+```
+sudo systemctl enable gdm
+```
+## XFCE:
+```
+sudo pacman -S xorg xorg-server xfce4 xfce4-goodies lightdm lightdm-gtk-greeter
+```
+### Включим графическую оболочку:
+```
+sudo systemctl enable lightdm
+```
+## Сinnamon:
+```
+sudo pacman -S xorg xorg-server cinnamon
+```
+### Включим графическую оболочку:
+```
+sudo systemctl enable gdm
+```
+## Deepin:
+```
+sudo pacman -S xorg xorg-server deepin deepin-extra lightdm lightdm-deepin-greeter
+```
+### Включим графическую оболочку:
+```
+sudo systemctl enable lightdm
+```
+## Enlightenment:
+```
+sudo pacman -S xorg xorg-server enlightenment lightdm lightdm-gtk-greeter
+```
+### Включим графическую оболочку:
+```
+sudo systemctl enable lightdm
+```
+## Mate:
+```
+sudo pacman -S xorg xorg-server mate mate-extra mate-panel mate-session-manager
+```
+### Включим графическую оболочку:
+```
+sudo systemctl enable mdm
+```
+## LXDE:
+```
+sudo pacman -S xorg xorg-server lxde-common lxsession openbox lxde lxdm
+```
+### Включим графическую оболочку:
+```
+sudo systemctl enable lxdm
 ```
 
 ### Перезагружаемся, и на этот раз уже в графическую оболочку.
