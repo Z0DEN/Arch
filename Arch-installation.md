@@ -564,7 +564,7 @@ sudo pacman -S xorg xorg-server lxde-common lxsession openbox lxde lxdm
 sudo systemctl enable lxdm
 ```
 
-### Перезагружаемся, и на этот раз уже в графическую оболочку.
+# Перезагружаемся, и на этот раз уже в графическую оболочку.
 
 ```
 reboot
