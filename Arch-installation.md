@@ -354,7 +354,7 @@ grub-install --boot-directory=/boot/EFI
 #### Конфигурируем загрузчик:
 
 ```
-grub-mkconfg -o /boot/grub/grub.cfg
+grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
 >## 7. Выходим
