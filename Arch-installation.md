@@ -459,6 +459,10 @@ sudo nano /etc/pacman.conf
 
 >## 9. Устанавливаем пакеты видеоускорения
 
+```
+sudo pacman -Syu 
+```
+
 ### Для AMD
 
 ```
